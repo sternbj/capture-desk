@@ -1,0 +1,27 @@
+.cd-assistant {
+  color-scheme: light dark;
+  color: CanvasText;
+  background: Canvas;
+  width: min(620px, calc(100vw - 32px));
+  max-height: calc(100vh - 40px);
+  border: 1px solid color-mix(in srgb, CanvasText 20%, Canvas);
+  border-radius: 12px;
+  padding: 20px;
+  font: 14px/1.45 system-ui, sans-serif;
+}
+.cd-assistant::backdrop { background: #14213390; }
+.cd-assistant header, .cd-assist-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.cd-assistant h2 { margin: 0; font-size: 20px; }
+.cd-assistant form, .cd-assistant section, .cd-assistant label { display: grid; gap: 7px; }
+.cd-assist-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.cd-assistant label { font-weight: 550; min-width: 0; margin: 0; }
+.cd-assistant :is(input, select, textarea, button) { font: inherit; color: inherit; }
+.cd-assistant :is(input, select, textarea) { width: 100%; min-width: 0; padding: 7px; border: 1px solid GrayText; border-radius: 5px; background: Canvas; }
+.cd-assistant input[type=file] { padding: 0; border: 0; }
+.cd-assistant button { border: 1px solid GrayText; border-radius: 6px; padding: 6px 12px; background: ButtonFace; cursor: pointer; }
+.cd-assistant button[type=submit] { background: #2563eb; border-color: #2563eb; color: #fff; }
+.cd-assistant p { margin: 3px 0; }
+.cd-assistant p:empty { display: none; }
+.cd-assistant [hidden] { display: none !important; }
+.cd-assistant textarea { resize: vertical; }
+@media (max-width: 480px) { .cd-assist-grid { grid-template-columns: 1fr; } }

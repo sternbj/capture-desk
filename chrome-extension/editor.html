@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Capture Desk · Bild bearbeiten</title>
+  <link rel="icon" type="image/png" href="icons/recorder-32.png"><link rel="stylesheet" href="editor.css">
+  <script src="vendor/ocr/tesseract.min.js" defer></script><script type="module" src="editor.js"></script>
+</head>
+<body>
+  <main class="editor-shell">
+    <header class="topbar">
+      <div class="recording-heading"><span class="eyebrow">Capture Desk</span><h1 id="recordingTitle">Bild bearbeiten</h1><p id="recordingInfo"></p></div>
+      <div class="export-actions">
+        <label class="theme-select"><span class="sr-only">Darstellung</span><select id="editorTheme" aria-label="Darstellung" title="Darstellung"><option value="system">Chrome</option><option value="light">Hell</option><option value="dark">Dunkel</option></select></label>
+        <button id="importImageButton" class="button secondary" type="button">Bild öffnen</button>
+        <button id="copyImageButton" class="button secondary image-action" type="button" hidden>Bild kopieren</button>
+        <button id="printButton" class="button secondary image-action" type="button" hidden>Drucken / PDF</button>
+        <label id="formatLabel" class="format-select" hidden><span class="sr-only">Bildformat</span><select id="imageFormat"><option value="png">PNG</option><option value="jpeg">JPEG</option><option value="webp">WebP</option></select></label>
+        <button id="downloadButton" class="button secondary" type="button" disabled>Download</button>
+        <button id="saveCopyButton" class="button secondary image-action" type="button" hidden disabled>Kopie speichern</button>
+        <button id="aiAssistantButton" class="button secondary" type="button" disabled>KI-Assistent</button>
+        <button id="openRecorderButton" class="button primary" type="button" disabled>Online speichern &amp; teilen</button>
+      </div>
+    </header>
+    <p id="editorStatus" class="status" role="status" aria-live="polite">Öffne ein Bild oder füge es aus der Zwischenablage ein.</p>
+    <input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp,image/avif" hidden>
+    <section id="importPanel" class="import-panel" aria-labelledby="importTitle" hidden tabindex="0">
+      <img class="import-icon" src="icons/image.svg" alt="">
+      <h2 id="importTitle">Bild öffnen und bearbeiten</h2>
+      <p>Ziehe ein Bild hierher, wähle eine Datei oder füge ein kopiertes Bild mit <kbd>⌘ / Strg</kbd> + <kbd>V</kbd> ein.</p>
+      <button id="chooseImageButton" class="button primary" type="button">Bild auswählen</button>
+      <p class="muted">PNG, JPEG, WebP und weitere Browser-Bildformate · Die Bearbeitung erfolgt lokal.</p>
+    </section>
+    <section id="imageEditor" class="image-editor" hidden>
+      <div class="toolbox" aria-label="Screenshot-Werkzeuge">
+        <div class="tool-group" role="group" aria-label="Werkzeug">
+          <button class="tool" type="button" data-tool="move" aria-pressed="true" title="Ansehen (V)">Ansehen</button>
+          <button class="tool" type="button" data-tool="crop" aria-pressed="false" title="Zuschneiden (C)">Zuschneiden</button>
+          <button class="tool" type="button" data-tool="pen" aria-pressed="false" title="Stift (P)">Stift</button>
+          <button class="tool" type="button" data-tool="line" aria-pressed="false" title="Linie (L)">Linie</button>
+          <button class="tool" type="button" data-tool="arrow" aria-pressed="false" title="Pfeil (A)">Pfeil</button>
+          <button class="tool" type="button" data-tool="rectangle" aria-pressed="false" title="Rechteck (R)">Rechteck</button>
+          <button class="tool" type="button" data-tool="ellipse" aria-pressed="false" title="Ellipse (E)">Ellipse</button>
+          <button class="tool" type="button" data-tool="highlight" aria-pressed="false" title="Markieren (H)">Markieren</button>
+          <button class="tool" type="button" data-tool="text" aria-pressed="false" title="Text (T)">Text</button>
+          <button class="tool" type="button" data-tool="step" aria-pressed="false" title="Schritte (N)">Schritte</button>
+          <button class="tool" type="button" data-tool="blur" aria-pressed="false" title="Weichzeichnen (B)">Weichzeichnen</button>
+          <button class="tool" type="button" data-tool="pixelate" aria-pressed="false">Verpixeln</button>
+          <button class="tool" type="button" data-tool="redact" aria-pressed="false" title="Schwärzen (X)">Schwärzen</button>
+        </div>
+        <div class="tool-group history-actions"><button id="undoButton" class="tool" type="button" disabled>Rückgängig</button><button id="redoButton" class="tool" type="button" disabled>Wiederholen</button><button id="resetButton" class="tool quiet" type="button" disabled>Original</button></div>
+      </div>
+      <div class="image-operations">
+        <label class="name-field">Name <input id="recordingName" type="text" maxlength="120" value="Screenshot"></label>
+        <div class="tool-group" role="group" aria-label="Bild drehen und spiegeln"><button id="rotateLeftButton" class="tool" type="button">90° links</button><button id="rotateRightButton" class="tool" type="button">90° rechts</button><button id="flipHorizontalButton" class="tool" type="button">Horizontal spiegeln</button><button id="flipVerticalButton" class="tool" type="button">Vertikal spiegeln</button><button id="resizeButton" class="tool" type="button" aria-expanded="false">Bildgröße</button></div>
+        <div class="zoom-controls"><button id="zoomOutButton" class="tool" type="button" aria-label="Verkleinern">−</button><select id="zoomSelect" aria-label="Ansicht vergrößern"><option value="fit">Einpassen</option><option value="0.25">25 %</option><option value="0.5">50 %</option><option value="1">100 %</option><option value="1.5">150 %</option><option value="2">200 %</option><option value="4">400 %</option></select><button id="zoomInButton" class="tool" type="button" aria-label="Vergrößern">+</button></div>
+      </div>
+      <form id="resizePanel" class="resize-panel" hidden><label>Breite <input id="resizeWidth" type="number" min="1" max="32767" required></label><label>Höhe <input id="resizeHeight" type="number" min="1" max="32767" required></label><label class="check-label"><input id="lockAspectRatio" type="checkbox" checked> Verhältnis beibehalten</label><button class="button secondary" type="submit">Größe anwenden</button><button id="cancelResizeButton" class="tool" type="button">Abbrechen</button></form>
+      <div id="drawingOptions" class="drawing-options" hidden>
+        <label>Farbe <input id="drawColor" type="color" value="#ef4444"></label><label>Linie <select id="lineWidth"><option value="3">Dünn</option><option value="6" selected>Normal</option><option value="12">Breit</option><option value="20">Sehr breit</option></select></label>
+        <label id="fillShapeLabel" class="check-label" hidden><input id="fillShape" type="checkbox"> Gefüllt</label>
+        <label id="textValueLabel" hidden>Text <textarea id="textValue" rows="1" maxlength="500" placeholder="Text eingeben"></textarea></label>
+        <label id="textSizeLabel" hidden>Größe <select id="textSize"><option value="18">18 px</option><option value="28" selected>28 px</option><option value="42">42 px</option><option value="64">64 px</option></select></label>
+        <label id="effectStrengthLabel" hidden>Stärke <select id="effectStrength"><option value="8">Leicht</option><option value="16" selected>Mittel</option><option value="28">Stark</option></select></label>
+      </div>
+      <p id="toolHint" class="tool-hint">Wähle ein Werkzeug, um den Screenshot zu bearbeiten.</p>
+      <div class="editor-workspace">
+        <div id="canvasViewport" class="canvas-viewport"><div id="canvasStack" class="canvas-stack"><canvas id="editorCanvas" aria-label="Bearbeiteter Screenshot"></canvas><canvas id="overlayCanvas" aria-label="Screenshot bearbeiten" tabindex="0"></canvas></div></div>
+        <aside id="ocrPanel" class="ocr-panel" hidden aria-labelledby="ocrTitle">
+          <div class="panel-heading"><h2 id="ocrTitle">Text erkennen</h2><button id="closeOCRButton" class="tool" type="button" aria-label="Texterkennung schließen">Schließen</button></div>
+          <p class="muted">Die Erkennung verarbeitet das bearbeitete Bild direkt auf deinem Gerät.</p>
+          <label>Sprache <select id="ocrLanguage"><option value="eng+deu">Deutsch &amp; Englisch</option><option value="deu">Deutsch</option><option value="eng">Englisch</option></select></label>
+          <div class="ocr-actions"><button id="runOCRButton" class="button primary" type="button">Text erkennen</button><button id="cancelOCRButton" class="button secondary" type="button" hidden>Abbrechen</button></div>
+          <progress id="ocrProgress" max="1" value="0" hidden aria-label="Fortschritt der Texterkennung"></progress><p id="ocrStatus" class="muted" role="status" aria-live="polite">Bereit</p>
+          <label for="ocrText" class="sr-only">Erkannter Text</label><textarea id="ocrText" rows="14" placeholder="Erkannter Text erscheint hier. Du kannst ihn korrigieren und kopieren."></textarea>
+          <div class="ocr-actions"><button id="copyTextButton" class="button secondary" type="button" disabled>Text kopieren</button><button id="downloadTextButton" class="button secondary" type="button" disabled>Als TXT speichern</button></div>
+        </aside>
+      </div>
+      <footer class="editor-footer"><span>Änderungen werden als neue Bildkopie gespeichert. Das Original bleibt erhalten.</span><button id="showOCRButton" class="tool" type="button">Text erkennen (OCR)</button></footer>
+    </section>
+    <section id="videoResult" class="video-result" aria-label="Videoaufnahme" hidden><video id="recordedVideo" controls playsinline></video><p>Schneide einen Ausschnitt oder ergänze Text und Markierungen. Für weitere Bearbeitungen kannst du das Video im Screen Recorder öffnen.</p></section>
+    <section id="errorPanel" class="error-panel" hidden><h2>Aufnahme konnte nicht geöffnet werden</h2><p id="errorText"></p><button id="openControlsButton" class="button secondary" type="button">Aufnahmen öffnen</button></section>
+  </main>
+</body>
+</html>

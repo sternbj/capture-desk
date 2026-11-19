@@ -1,0 +1,140 @@
+<main class="controller">
+    <header class="app-heading">
+      <div class="brand"><img src="icons/recorder-32.png" alt="" width="27" height="27"><strong>Capture Desk</strong></div>
+      <button id="libraryButton" class="icon-button" type="button" aria-label="Browser-Aufnahmen anzeigen" title="Browser-Aufnahmen"><img src="icons/library.svg" alt=""></button>
+    </header>
+    <div id="setupView" class="setup-view">
+      <nav id="modeTabs" class="mode-tabs" role="tablist" aria-label="Aufnahmeart">
+        <button id="screenshotTab" type="button" role="tab" aria-controls="screenshotPanel" aria-selected="false" tabindex="-1"><img src="icons/camera.svg" alt="">Screenshot</button>
+        <button id="recordTab" type="button" role="tab" aria-controls="recordPanel" aria-selected="true"><img src="icons/video.svg" alt="">Aufnahme</button>
+      </nav>
+      <form id="settingsForm" class="settings-form">
+        <div id="setupBody" class="setup-body">
+          <section id="recordPanel" role="tabpanel" aria-labelledby="recordTab">
+            <div class="source-heading"><h1>Aufnahmequelle</h1><label class="camera-only-choice"><input type="radio" name="source" value="camera"><img src="icons/video.svg" alt="">Nur Kamera</label></div>
+            <fieldset class="source-options" aria-label="Aufnahmequelle">
+              <label class="source-card">
+                <input type="radio" name="source" value="screen">
+                <img class="device-icon-on" src="icons/monitor.svg" alt=""><img class="device-icon-off" src="icons/monitor-off.svg" alt="">
+                <strong>Bildschirm</strong><span>Gesamter Bildschirm</span>
+              </label>
+              <label class="source-card"><input type="radio" name="source" value="window"><img src="icons/app-window.svg" alt=""><strong>Fenster</strong><span>Eine Anwendung</span></label>
+              <label class="source-card"><input type="radio" name="source" value="tab"><img src="icons/panels-top-left.svg" alt=""><strong>Chrome-Tab</strong><span>Eine Webseite</span></label>
+            </fieldset>
+            <p id="sourceHint" class="source-hint">Wähle zuerst eine Aufnahmequelle.</p>
+            <label id="regionCaptureSetting" class="toggle-row region-option"><img src="icons/scan.svg" alt=""><span><strong>Ausschnitt aufnehmen</strong></span><input id="regionCapture" name="regionCapture" type="checkbox" role="switch"><span class="switch-track" aria-hidden="true"></span></label>
+
+          </section>
+          <section id="screenshotPanel" role="tabpanel" aria-labelledby="screenshotTab" hidden>
+            <h1 class="sr-only">Screenshot erstellen</h1>
+            <div class="screenshot-tiles" aria-label="Screenshot-Bereich">
+              <button class="screenshot-tile" type="button" data-capture="visible"><img src="icons/app-window.svg" alt=""><span>Sichtbarer Teil</span></button>
+              <button class="screenshot-tile" type="button" data-capture="fullpage"><img src="icons/scan-line.svg" alt=""><span>Ganze Seite</span></button>
+              <button class="screenshot-tile" type="button" data-capture="region"><img src="icons/scan.svg" alt=""><span>Ausschnitt</span></button>
+            </div>
+            <div class="screenshot-shortcuts">
+              <button id="delayedScreenshotButton" class="screenshot-row" type="button"><img src="icons/circle-dot.svg" alt=""><span>Sichtbarer Teil nach Verzögerung</span><small id="screenshotDelayLabel">5 s</small></button>
+              <button id="displayScreenshotButton" class="screenshot-row" type="button"><img src="icons/monitor.svg" alt=""><span>Bildschirm &amp; App-Fenster</span></button>
+              <button id="importImageButton" class="screenshot-row" type="button"><img src="icons/image.svg" alt=""><span>Bild oder Zwischenablage bearbeiten</span></button>
+              <button id="extractTextButton" class="screenshot-row" type="button"><img src="icons/scan-line.svg" alt=""><span>Screenshot &amp; Text erkennen</span></button>
+            </div>
+            <p id="screenshotMessage" class="message" role="status" aria-live="polite" hidden></p>
+            <div class="screenshot-save"><label for="screenshotDestination">Speichern in</label><select id="screenshotDestination" aria-label="Screenshot-Speicherort"><option value="cloud">Cloud</option><option value="local">Lokal</option></select><button id="screenshotSettingsButton" class="icon-button" type="button" aria-label="Screenshot-Einstellungen"><img src="icons/settings.svg" alt=""></button></div>
+            <fieldset hidden aria-hidden="true"><input type="radio" name="screenshotMode" value="visible" checked><input type="radio" name="screenshotMode" value="fullpage"><input type="radio" name="screenshotMode" value="region"></fieldset>
+          </section>
+        </div>
+        <section id="settingsPanel" class="advanced-panel" aria-label="Weitere Einstellungen" hidden>
+          <div class="section-title"><button id="closeSettingsButton" class="back-button" type="button" aria-label="Zurück zur Aufnahme"><img src="icons/arrow-left.svg" alt=""></button><h1>Weitere Einstellungen</h1></div>
+          <div class="advanced-body">
+            <label class="field inline-field"><span>Darstellung</span><select id="uiTheme" aria-label="Darstellung"><option value="system">Wie Chrome</option><option value="light">Hell</option><option value="dark">Dunkel</option></select></label>
+            <label class="toggle-row"><span><strong>Bei ausgeschaltetem Mikrofon erinnern</strong></span><input id="microphoneReminder" name="microphoneReminder" type="checkbox" role="switch" checked><span class="switch-track" aria-hidden="true"></span></label>
+            <label class="toggle-row"><img src="icons/volume-2.svg" alt=""><span><strong>Ton der Quelle</strong><small id="audioHint">Wenn Chrome ihn anbietet</small></span><input id="systemAudio" name="systemAudio" type="checkbox" role="switch" checked><span class="switch-track" aria-hidden="true"></span></label>
+            <label class="field"><span>Name der Aufnahme</span><input id="recordingName" name="name" type="text" maxlength="90" placeholder="Meine Aufnahme" autocomplete="off"></label>
+            <div class="settings-grid"><label class="field"><span>Countdown</span><select id="countdown" name="countdown"><option value="0">Keiner</option><option value="3" selected>3 Sekunden</option><option value="5">5 Sekunden</option><option value="10">10 Sekunden</option></select></label></div>
+            <label class="toggle-row"><span><strong>Automatisch beenden</strong></span><input id="autoStopEnabled" name="autoStopEnabled" type="checkbox" role="switch"><span class="switch-track" aria-hidden="true"></span></label>
+            <label id="autoStopField" class="field inline-field" hidden><span>Beenden nach</span><input id="autoStopMinutes" name="autoStopMinutes" type="number" min="0.1" max="360" step="0.1" value="5" aria-label="Automatisch beenden nach Minuten"><span>Minuten</span></label>
+            <label class="field inline-field"><span>Screenshot-Verzögerung</span><select id="screenshotDelay" name="screenshotDelaySeconds"><option value="3" selected>3 Sekunden</option><option value="5">5 Sekunden</option><option value="10">10 Sekunden</option></select></label>
+            <div class="settings-grid"><label class="field"><span>Bildrate</span><select id="frameRate" name="frameRate"><option value="24">24 fps</option><option value="30" selected>30 fps</option><option value="60">60 fps</option></select></label><label class="field"><span>Videoqualität</span><select id="bitrate" name="bitrate"><option value="2500000">Kompakt · 2,5 Mbps</option><option value="4000000" selected>Standard · 4 Mbps</option><option value="8000000">Hoch · 8 Mbps</option></select></label></div>
+            <div id="cameraOptions" hidden><label class="field"><span>Kameraposition</span><select id="cameraPosition" name="cameraPosition"><option value="bottom-right">Unten rechts</option><option value="bottom-left">Unten links</option><option value="top-right">Oben rechts</option><option value="top-left">Oben links</option></select></label></div>
+            <div class="privacy-note"><img src="icons/shield-check.svg" alt=""><div><strong>Die Steuerung bleibt außerhalb des Videos</strong><p>Bei Tab- und Fensteraufnahmen erscheint die Leiste außerhalb der Quelle. Bei Bildschirmaufnahmen öffnet ein Klick auf REC das Menü zum Beenden und Speichern.</p><p id="shortcutKeys">Tastenkürzel unter chrome://extensions/shortcuts</p></div></div>
+          </div>
+        </section>
+        <div id="actionArea" class="action-area">
+          <div id="compactCaptureControls" class="compact-capture-controls">
+            <div id="cameraControl" class="device-control">
+              <label class="device-toggle" title="Kamera ein- oder ausschalten">
+                <input id="camera" name="camera" type="checkbox" role="switch" aria-label="Kamera">
+                <img class="device-icon-on" src="icons/video.svg" alt=""><img class="device-icon-off" src="icons/video-off.svg" alt="">
+              </label>
+              <button id="cameraDeviceButton" class="device-dropdown-button" type="button" aria-label="Kamera auswählen" aria-expanded="false" aria-controls="cameraDeviceMenu"><span aria-hidden="true"></span></button>
+              <div id="cameraDeviceMenu" class="device-popover" role="group" aria-label="Kameraeinstellungen" hidden><label class="field"><span>Kamera auswählen</span><select id="cameraDevice" name="cameraDeviceId"><option value="">Standardkamera</option></select></label></div>
+            </div>
+            <div id="microphoneControl" class="device-control">
+              <label class="device-toggle" title="Mikrofon ein- oder ausschalten">
+                <input id="microphone" name="microphone" type="checkbox" role="switch" aria-label="Mikrofon" checked>
+                <img class="device-icon-on" src="icons/mic.svg" alt=""><img class="device-icon-off" src="icons/mic-off.svg" alt="">
+              </label>
+              <button id="microphoneDeviceButton" class="device-dropdown-button" type="button" aria-label="Mikrofon auswählen" aria-expanded="false" aria-controls="microphoneDeviceMenu"><span aria-hidden="true"></span></button>
+              <div id="microphoneDeviceMenu" class="device-popover" role="group" aria-label="Mikrofoneinstellungen" hidden><label class="field"><span>Mikrofon auswählen</span><select id="microphoneDevice" name="microphoneDeviceId"><option value="">Standardmikrofon</option></select></label></div>
+            </div>
+            <div id="controlBarSetting" class="control-bar-setting"><label class="toggle-row control-bar-toggle"><img src="icons/panels-top-left.svg" alt=""><span><strong>Schwebende Leiste</strong></span><input id="controlBar" name="controlBar" type="checkbox" role="switch" checked aria-describedby="controlBarHint"><span class="switch-track" aria-hidden="true"></span></label><span id="controlBarHint" hidden></span></div>
+          </div>
+          <div id="quickSettings" class="quick-settings compact-quick-settings">
+            <label class="quick-select recording-setting resolution-setting"><span class="quality-badge" aria-hidden="true">HD</span><select id="resolution" name="resolution" aria-label="Auflösung"><option value="720">720p</option><option value="1080" selected>1080p</option><option value="2160">4K</option><option value="source">Original</option></select><span id="qualitySummary" hidden></span></label>
+            <label class="quick-select recording-setting destination-setting"><img src="icons/library.svg" alt=""><select id="saveDestination" name="saveDestination" aria-label="Speicherort"><option value="cloud">Cloud</option><option value="local">Lokal</option><option value="folder" hidden>Ordner</option><option value="configure">Ordner wählen…</option></select></label>
+            <label class="quick-select recording-setting format-setting"><img class="format-icon" src="icons/video.svg" alt=""><span class="format-badge" hidden></span><select id="recordingFormat" name="format" aria-label="Videoformat"><option value="auto">Auto</option></select></label>
+            <button id="settingsButton" class="text-button" type="button" aria-label="Einstellungen anzeigen" aria-expanded="false">Mehr<img src="icons/chevron-right.svg" alt=""></button>
+          </div>
+          <p id="message" class="message" role="status" aria-live="polite" hidden></p>
+          <div id="lastRecording" class="recording-result message" hidden>
+            <p id="lastRecordingMessage" role="status"></p>
+            <button id="openLastRecordingButton" class="text-button" type="button">Letzte Aufnahme öffnen</button>
+          </div>
+          <button id="startButton" class="button primary main-action" type="button" disabled><img src="icons/circle-dot.svg" alt=""><span>Aufnahme starten</span></button>
+          <button id="screenshotButton" class="button primary main-action" type="button" hidden><img src="icons/camera.svg" alt=""><span>Screenshot erstellen</span></button>
+          <p id="actionHint" class="action-hint">Die Aufnahme startet erst nach deiner Quellenauswahl.</p>
+        </div>
+      </form>
+    </div>
+    <section id="microphoneReminderPanel" class="microphone-reminder" role="alertdialog" aria-modal="true" aria-labelledby="microphoneReminderTitle" aria-describedby="microphoneReminderText" hidden>
+      <img src="icons/mic-off.svg" alt=""><h1 id="microphoneReminderTitle">Ohne Mikrofon aufnehmen?</h1><p id="microphoneReminderText">Deine Stimme wird nicht aufgenommen. Du kannst das Mikrofon einschalten oder ohne Mikrofon fortfahren.</p>
+      <button id="enableMicrophoneButton" class="button primary" type="button">Mikrofon einschalten</button><button id="continueMicrophoneButton" class="button secondary" type="button">Ohne Mikrofon fortfahren</button><button id="cancelMicrophoneButton" class="text-button" type="button">Zurück</button>
+    </section>
+    <section id="captureRegionPanel" class="capture-region-panel" aria-labelledby="captureRegionTitle" hidden>
+      <header><h1 id="captureRegionTitle" tabindex="-1">Aufnahmeausschnitt wählen</h1><p>Ziehe einen Rahmen in der Vorschau oder gib die Position und Größe in Pixeln ein. Im Video erscheint nur der gewählte Ausschnitt.</p></header>
+      <div id="captureRegionStage" class="capture-region-stage">
+        <img id="captureRegionImage" alt="Standbild der freigegebenen Quelle" draggable="false">
+        <div id="captureRegionOutline" class="capture-region-outline" aria-hidden="true" hidden></div>
+      </div>
+      <div class="capture-region-fields" aria-label="Ausschnitt in Pixeln">
+        <label>Links <input id="captureRegionX" type="number" min="0" step="1"></label>
+        <label>Oben <input id="captureRegionY" type="number" min="0" step="1"></label>
+        <label>Breite <input id="captureRegionWidth" type="number" min="4" step="1"></label>
+        <label>Höhe <input id="captureRegionHeight" type="number" min="4" step="1"></label>
+      </div>
+      <p id="captureRegionError" class="message error" role="alert" hidden></p>
+      <div class="capture-region-actions"><button id="cancelCaptureRegion" class="button secondary" type="button">Abbrechen</button><button id="confirmCaptureRegion" class="button primary" type="button" disabled>Aufnahme starten</button></div>
+    </section>
+    <section id="activePanel" class="active-panel" aria-label="Aufnahmesteuerung" hidden>
+      <div class="recording-state"><span id="recordingIndicator" class="recording-indicator" hidden></span><span id="statusText" role="status">Verbindung wird hergestellt…</span></div>
+      <div class="pill-transport"><span id="timer" class="timer" aria-label="Aufnahmedauer">00:00</span><button id="pauseButton" class="button secondary" type="button" hidden><img src="icons/pause.svg" alt="">Pause</button><button id="resumeButton" class="button primary" type="button" hidden><img src="icons/play.svg" alt="">Fortsetzen</button><button id="stopButton" class="button danger" type="button" hidden><img src="icons/square.svg" alt="">Beenden und speichern</button></div>
+      <button id="showControlBarButton" class="button secondary reopen-control-bar" type="button" hidden><img src="icons/panels-top-left.svg" alt="">Schwebende Leiste anzeigen</button>
+      <section id="liveAudioPanel" class="live-audio-panel" aria-label="Ton während der Aufnahme" hidden>
+        <label class="toggle-row">
+          <img class="device-icon-on" src="icons/mic.svg" alt=""><img class="device-icon-off" src="icons/mic-off.svg" alt="">
+          <span><strong>Mikrofon</strong><small id="liveMicrophoneHint">Deine Stimme aufnehmen</small></span>
+          <input id="liveMicrophone" type="checkbox" role="switch"><span class="switch-track" aria-hidden="true"></span>
+        </label>
+        <label class="field live-device-field"><span>Mikrofon auswählen</span><select id="liveMicrophoneDevice"><option value="">Standardmikrofon</option></select></label>
+        <label class="toggle-row"><img src="icons/volume-2.svg" alt=""><span><strong>Ton der Quelle</strong><small id="liveSourceAudioHint">Ton der freigegebenen Quelle</small></span><input id="liveSourceAudio" type="checkbox" role="switch"><span class="switch-track" aria-hidden="true"></span></label>
+      </section>
+      <p id="activeHint" class="active-hint">Bestätige die gewünschte Quelle im Chrome-Dialog.</p>
+      <p id="activeMessage" class="message" role="status" aria-live="polite" hidden></p>
+      <div class="pill-summary"><span id="captureSummary">Keine Quelle ausgewählt</span></div>
+    </section>
+    <section id="libraryPanel" class="library-panel" aria-label="Browser-Aufnahmen" hidden>
+      <div class="section-title"><button id="closeLibraryButton" class="back-button" type="button" aria-label="Zurück zur Aufnahme"><img src="icons/arrow-left.svg" alt=""></button><h1>Browser-Aufnahmen</h1></div>
+      <div class="library-body"><p id="libraryMessage" class="message" role="status" aria-live="polite" hidden></p><p id="libraryRecordingResult" class="message" role="status" hidden></p><div id="recordingsList" class="recordings-list"></div><p id="libraryEmpty" class="empty" hidden>Noch keine Aufnahmen in diesem Chrome-Profil.</p></div>
+    </section>
+    <footer id="appFooter" class="app-footer"><button id="libraryFooterButton" type="button" aria-label="Aufnahmen in Chrome öffnen"><img src="icons/library.svg" alt="">Aufnahmen in Chrome</button><a id="onlineRecorderLink" target="_blank" rel="noopener" hidden>Online-Recorder</a><button id="optionsButton" type="button" aria-label="Allgemeine Einstellungen" title="Allgemeine Einstellungen"><img src="icons/settings.svg" alt=""></button></footer>
+  </main>

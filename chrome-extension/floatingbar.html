@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="de" data-theme-preference="system">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Capture Desk · Control bar</title>
+  <link rel="icon" type="image/png" href="icons/recorder-32.png">
+  <link rel="stylesheet" href="floatingbar.css"><script type="module" src="floatingbar.js"></script>
+</head>
+<body style="visibility:hidden">
+  <main class="floating-bar" aria-label="Aufnahmesteuerung">
+    <section class="transport" aria-label="Aufnahme steuern">
+      <span id="barTimer" class="timer" aria-label="Aufnahmedauer">00:00</span>
+      <button id="barPauseButton" class="transport-button primary" type="button" aria-label="Aufnahme pausieren" title="Pause"><img src="icons/pause.svg" alt=""></button>
+      <button id="barResumeButton" class="transport-button primary" type="button" aria-label="Aufnahme fortsetzen" title="Fortsetzen" hidden><img src="icons/play.svg" alt=""></button>
+      <button id="barStopButton" class="transport-button stop" type="button" aria-label="Aufnahme beenden und speichern" title="Beenden und speichern"><img src="icons/square.svg" alt=""></button>
+      <button id="barMicrophoneButton" class="transport-button device" type="button" aria-label="Mikrofon" title="Mikrofon"><img src="icons/mic.svg" alt=""></button>
+      <button id="barDetailsButton" class="transport-button device settings" type="button" aria-label="Aufnahmeeinstellungen anzeigen" title="Aufnahmeeinstellungen" aria-expanded="false" aria-controls="barDetails"><img src="icons/settings.svg" alt=""></button>
+    </section>
+    <p id="barMessage" class="message" role="status" hidden></p>
+    <section id="barDetails" class="details" aria-label="Aktuelle Aufnahmeeinstellungen" hidden>
+      <div class="details-scroll">
+      <header class="bar-heading"><span id="barStatus" role="status">Aufnahme wird verbunden…</span><div class="heading-tools"><button id="pinBarButton" class="quiet-button pin-button" type="button" aria-label="Leiste immer im Vordergrund halten" title="Immer im Vordergrund halten" aria-pressed="false" hidden><img src="icons/pin.svg" alt=""></button><button id="hideBarButton" class="quiet-button" type="button" aria-label="Leiste ausblenden" title="Leiste ausblenden"><img src="icons/chevron-right.svg" alt=""></button></div></header>
+      <label class="device-field"><span>Mikrofon auswählen</span><select id="barMicrophoneDevice"><option value="">Standardmikrofon</option></select></label>
+      <div class="source-audio-row"><span>Ton der Quelle<small id="barSourceAudioHint">Ton der freigegebenen Quelle</small></span><button id="barSourceAudioButton" class="transport-button device" type="button" aria-label="Quellton" title="Quellton"><img src="icons/volume-2.svg" alt=""></button></div>
+      <label class="device-field"><span>Gesamtdauer in Minuten · 0 = unbegrenzt</span><input id="barAutoStopMinutes" type="number" min="0" max="360" step="0.1" value="0"></label>
+      <fieldset id="barAnnotationTools" class="annotation-tools"><legend>Aktuellen Chrome-Tab markieren</legend>
+        <label class="device-field"><span>Zeichenwerkzeug · Esc zum Beenden</span><select id="barDrawingMode"><option value="none">Nicht zeichnen</option><option value="pen">Stift</option><option value="arrow">Pfeil</option><option value="rectangle">Rahmen</option><option value="highlight">Textmarker</option></select></label>
+        <div class="annotation-options"><label>Farbe <input id="barDrawColor" type="color" value="#ff435b"></label><label><input id="barCursorHighlight" type="checkbox"> Maus hervorheben</label></div>
+        <div class="annotation-actions"><button id="barUndoAnnotation" type="button">Rückgängig</button><button id="barClearAnnotations" type="button">Löschen</button></div>
+      </fieldset>
+      <dl><div><dt>Quelle</dt><dd id="detailSource">—</dd></div><div><dt>Qualität</dt><dd id="detailQuality">—</dd></div><div><dt>Mikrofon</dt><dd id="detailMicrophone">—</dd></div><div><dt>Quellton</dt><dd id="detailAudio">—</dd></div><div><dt>Kamera</dt><dd id="detailCamera">—</dd></div></dl>
+      <p id="barHint" class="bar-hint">Aufnahme läuft außerhalb dieser Leiste.</p>
+      </div>
+      <button id="openMenuButton" class="menu-button" type="button">Aufnahmemenü öffnen<img src="icons/chevron-right.svg" alt=""></button>
+    </section>
+  </main>
+</body>
+</html>

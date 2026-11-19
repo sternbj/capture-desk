@@ -1,0 +1,10 @@
+node_modules/
+artifacts/
+chrome-extension/vendor/ocr/
+test-results/
+playwright-report/
+.DS_Store
+.env
+.env.*
+*.pem
+*.key

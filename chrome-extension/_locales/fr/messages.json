@@ -1,0 +1,26 @@
+{
+  "description": {
+    "message": "Enregistrez votre écran ou une zone, faites des captures et modifiez et enregistrez vos fichiers localement."
+  },
+  "pause_resume": {
+    "message": "Mettre en pause ou reprendre"
+  },
+  "stop_recording": {
+    "message": "Arrêter et enregistrer"
+  },
+  "show_controls": {
+    "message": "Mettre en pause et afficher les commandes"
+  },
+  "capture_visible": {
+    "message": "Capturer la partie visible"
+  },
+  "capture_fullpage": {
+    "message": "Capturer toute la page"
+  },
+  "capture_region": {
+    "message": "Capturer une zone de la page"
+  },
+  "start_recording": {
+    "message": "Démarrer avec les derniers réglages"
+  }
+}

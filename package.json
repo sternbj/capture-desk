@@ -1,0 +1,24 @@
+{
+  "name": "capture-desk",
+  "version": "1.4.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node tools/serve.mjs",
+    "test": "npm run test:unit && playwright test",
+    "test:unit": "node --test tests/*.test.mjs",
+    "ocr:extension": "node tools/bundle-extension-ocr.mjs",
+    "package:extension": "node tools/package-extension.mjs",
+    "package:store": "node tools/package-extension.mjs --store"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@tesseract.js-data/deu": "1.0.0",
+    "@tesseract.js-data/eng": "1.0.0",
+    "tesseract.js": "7.0.0"
+  }
+}

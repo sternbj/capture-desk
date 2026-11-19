@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" data-theme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Capture Desk</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./locales.js" defer></script>
+  <script src="./recording-store.js" defer></script>
+  <script src="./recorder.js" defer></script>
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="./" aria-label="Capture Desk"><span class="brand-icon" aria-hidden="true"></span>Capture Desk</a>
+    <div class="toolbar">
+      <label class="language"><span data-copy="language">Language</span>
+        <select id="locale">
+          <option value="en">English</option><option value="de">Deutsch</option>
+          <option value="fr">Français</option><option value="es">Español</option>
+        </select>
+      </label>
+      <button id="showBackups" type="button" data-copy="backups">Browser backups</button>
+      <button id="assistant" type="button" data-copy="ai">AI assistant</button>
+    </div>
+  </header>
+  <main>
+    <span id="status" class="status" role="status" aria-live="polite" data-tone="ready" data-copy="ready">Ready</span>
+    <h1 data-copy="title">Screen recorder</h1>
+    <div class="workspace">
+      <div class="capture-panel">
+        <div class="viewport" id="viewport">
+          <div class="empty" id="empty" data-copy="empty">Choose a source to preview your recording.</div>
+          <video id="preview" autoplay muted playsinline hidden></video>
+          <div id="cropOverlay" hidden>
+            <div id="cropSelection" hidden></div>
+          </div>
+        </div>
+        <div class="transport">
+          <output id="timer" aria-label="Recording duration">00:00</output>
+          <button id="pause" type="button" data-copy="pause" hidden>Pause</button>
+          <button id="stop" class="danger" type="button" data-copy="stop" hidden>Stop and save</button>
+          <button id="popout" type="button" data-copy="popout" hidden>Float controls</button>
+        </div>
+      </div>
+      <aside class="settings" aria-labelledby="settingsTitle">
+        <h2 id="settingsTitle" data-copy="settings">Recording settings</h2>
+        <button id="source" class="source" type="button" data-copy="source">Choose screen or window</button>
+        <label class="check"><input id="mic" type="checkbox"> <span data-copy="mic">Microphone</span></label>
+        <label class="check"><input id="displayAudio" type="checkbox" checked> <span data-copy="displayAudio">Audio from the source</span></label>
+        <p class="hint" id="audioHint" data-copy="audioHelp">Source audio depends on the browser and what you share.</p>
+        <p class="hint" id="floatHint" data-copy="floatHint" hidden>The recording controls float inside this page in this browser.</p>
+        <fieldset>
+          <legend data-copy="area">Area</legend>
+          <div class="segments">
+            <button id="fullArea" type="button" aria-pressed="true" data-copy="fullArea">Full source</button>
+            <button id="cropArea" type="button" aria-pressed="false" data-copy="cropArea" disabled>Custom area</button>
+          </div>
+          <p id="cropHint" class="hint" data-copy="cropHelp" hidden>Drag a rectangle on the preview.</p>
+          <div class="coordinates" id="coordinates" hidden>
+            <label><span data-copy="left">Left</span> <input id="left" type="number" min="0" max="99" step="1" inputmode="numeric"></label>
+            <label><span data-copy="top">Top</span> <input id="top" type="number" min="0" max="99" step="1" inputmode="numeric"></label>
+            <label><span data-copy="width">Width</span> <input id="width" type="number" min="1" max="100" step="1" inputmode="numeric"></label>
+            <label><span data-copy="height">Height</span> <input id="height" type="number" min="1" max="100" step="1" inputmode="numeric"></label>
+          </div>
+        </fieldset>
+        <button id="start" class="primary" type="button" data-copy="start" disabled>Start recording</button>
+      </aside>
+    </div>
+    <section id="result" aria-labelledby="resultTitle" hidden>
+      <div class="section-heading">
+        <h2 id="resultTitle" data-copy="result">Recording</h2>
+        <div class="toolbar">
+          <button id="aiButton" type="button" data-copy="analyzeFrame" disabled>Analyze video frame</button>
+          <a id="download" class="button primary" data-copy="download" download>Download video</a>
+        </div>
+      </div>
+      <video id="recording" controls playsinline preload="auto"></video>
+    </section>
+  </main>
+  <dialog id="backupDialog">
+    <div class="section-heading">
+      <h2 data-copy="backups">Browser backups</h2>
+      <form method="dialog"><button data-copy="close">Close</button></form>
+    </div>
+    <p class="hint" data-copy="backupHelp">Backups are stored in this browser and can be cleared by its storage settings.</p>
+    <p id="backupsStatus" role="status"></p>
+    <ul id="backupList"></ul>
+  </dialog>
+</body>
+</html>

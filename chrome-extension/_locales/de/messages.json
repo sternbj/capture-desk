@@ -1,0 +1,26 @@
+{
+  "description": {
+    "message": "Bildschirm oder Ausschnitt aufnehmen, Screenshots erstellen und Dateien lokal bearbeiten und speichern."
+  },
+  "pause_resume": {
+    "message": "Aufnahme pausieren oder fortsetzen"
+  },
+  "stop_recording": {
+    "message": "Aufnahme beenden und speichern"
+  },
+  "show_controls": {
+    "message": "Aufnahme sicher pausieren und Steuerung öffnen"
+  },
+  "capture_visible": {
+    "message": "Sichtbaren Seitenbereich aufnehmen"
+  },
+  "capture_fullpage": {
+    "message": "Ganze Webseite aufnehmen"
+  },
+  "capture_region": {
+    "message": "Ausgewählten Seitenbereich aufnehmen"
+  },
+  "start_recording": {
+    "message": "Aufnahme mit den letzten Einstellungen starten"
+  }
+}

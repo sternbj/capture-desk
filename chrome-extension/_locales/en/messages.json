@@ -1,0 +1,26 @@
+{
+  "description": {
+    "message": "Record your screen or a selected area, capture screenshots, and edit and save your files locally."
+  },
+  "pause_resume": {
+    "message": "Pause or resume recording"
+  },
+  "stop_recording": {
+    "message": "Stop and save recording"
+  },
+  "show_controls": {
+    "message": "Pause safely and show recording controls"
+  },
+  "capture_visible": {
+    "message": "Capture the visible part of the page"
+  },
+  "capture_fullpage": {
+    "message": "Capture the entire page"
+  },
+  "capture_region": {
+    "message": "Capture an area of the page"
+  },
+  "start_recording": {
+    "message": "Start recording with the last settings"
+  }
+}

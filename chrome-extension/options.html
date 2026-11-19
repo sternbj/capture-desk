@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="de" data-theme-preference="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Einstellungen · Capture Desk</title>
+  <link rel="icon" type="image/png" href="icons/recorder-32.png">
+  <link rel="stylesheet" href="options.css">
+  <script type="module" src="options.js"></script>
+</head>
+<body>
+  <header class="page-header">
+    <a class="brand" href="options.html"><img src="icons/recorder-32.png" width="28" height="28" alt=""><span>Capture Desk</span></a>
+    <nav aria-label="Weitere Funktionen"><button id="libraryButton" type="button">Meine Aufnahmen</button><button id="assistantButton" type="button">KI-Assistent</button><button id="shortcutsButton" type="button">Tastenkürzel</button></nav>
+  </header>
+  <main>
+    <div class="page-intro"><h1>Einstellungen</h1><p>Speichern, Aufnehmen und das Menü anpassen.</p></div>
+    <form id="preferencesForm">
+      <section class="settings-section" aria-labelledby="captureHeading">
+        <div class="section-heading"><h2 id="captureHeading">Screenshots</h2><p>Aufnahme und Bearbeitung</p></div>
+        <div class="fields">
+          <label class="field"><span>Verzögerter Screenshot</span><select id="screenshotDelaySeconds"><option value="3">3 Sekunden</option><option value="5">5 Sekunden</option><option value="10">10 Sekunden</option></select><small>Für die Funktion „Screenshot nach Verzögerung“.</small></label>
+          <label class="field"><span>Verzögerung bei Bildschirm und Fenster</span><select id="desktopDelaySeconds"><option value="0">Keine</option><option value="3">3 Sekunden</option><option value="5">5 Sekunden</option><option value="10">10 Sekunden</option></select><small>Beginnt nach der Auswahl im Chrome-Dialog.</small></label>
+          <label class="field"><span>Bildformat</span><select id="screenshotFormat"><option value="png">PNG</option><option value="jpeg">JPEG</option><option value="webp">WebP</option></select></label>
+          <label class="field"><span>Bildbearbeitung überspringen</span><select id="skipAnnotation"><option value="never">Nie</option><option value="always">Immer</option><option value="fullpage">Nur bei ganzen Webseiten</option></select><small>Der Screenshot wird direkt gespeichert.</small></label>
+          <label class="check-row wide"><input id="addDateUrl" type="checkbox"><span>Datum und Seitenadresse zum Screenshot hinzufügen</span></label>
+          <label class="check-row wide"><input id="retinaScale" type="checkbox"><span>Retina-Screenshots auf 50 % verkleinern<small>Reduziert die Pixelgröße auf hochauflösenden Displays.</small></span></label>
+        </div>
+      </section>
+      <section class="settings-section" aria-labelledby="downloadHeading">
+        <div class="section-heading"><h2 id="downloadHeading">Speichern</h2><p>Dateien auf deinem Computer</p></div>
+        <div class="fields">
+          <section id="recordingFolder" class="recording-folder wide" aria-labelledby="recordingFolderHeading">
+            <h3 id="recordingFolderHeading">Aufnahmeordner für Videos</h3>
+            <p>Wähle einmal einen Ordner für deine Videos. Für OneDrive wählst du im Finder einen Ordner, den OneDrive synchronisiert.</p>
+            <p id="recordingFolderName">Kein Ordner ausgewählt.</p>
+            <div class="folder-actions">
+              <button id="grantRecordingFolder" type="button" hidden>Schreibzugriff erlauben</button>
+              <button id="chooseRecordingFolder" type="button">Ordner auswählen</button>
+              <button id="removeRecordingFolder" type="button" hidden>Ordnerauswahl aufheben</button>
+            </div>
+            <small>Wenn Chrome „Bei jedem Besuch zulassen“ anbietet, kannst du damit den Schreibzugriff dauerhaft erlauben. Fehlt der Zugriff, findest du das Video unter „Aufnahmen in Chrome“.</small>
+            <p id="recordingFolderStatus" role="status" aria-live="polite"></p>
+          </section>
+          <label class="check-row wide"><input id="autoDownload" type="checkbox"><span>Screenshots automatisch herunterladen<small>Zusätzlich zur gewählten Speicherung in Cloud oder Browser.</small></span></label>
+          <label class="check-row wide"><input id="askWhereToSave" type="checkbox"><span>Vor jedem Download nach dem Speicherort fragen</span></label>
+          <label class="field"><span>Unterordner im Download-Ordner</span><input id="downloadDirectory" type="text" maxlength="160" placeholder="z. B. Screenshots/Kunden" autocomplete="off" spellcheck="false"><small>Leer lassen für den normalen Download-Ordner.</small></label>
+          <label class="field"><span>Beginn des Screenshot-Dateinamens</span><input id="filenamePrefix" type="text" maxlength="60" placeholder="Screenshot" autocomplete="off"></label>
+          <label class="field"><span>Datumsformat</span><select id="dateFormat"><option value="dmy">Tag.Monat.Jahr</option><option value="ymd">Jahr-Monat-Tag</option><option value="mdy">Monat-Tag-Jahr</option></select></label>
+          <label class="field"><span>Zeitformat</span><select id="timeFormat"><option value="24">24 Stunden</option><option value="12">12 Stunden (AM/PM)</option></select></label>
+        </div>
+      </section>
+      <section class="settings-section" aria-labelledby="recordHeading">
+        <div class="section-heading"><h2 id="recordHeading">Videoaufnahme</h2><p>Start und Aufnahmezeit</p></div>
+        <div class="fields">
+          <label class="field"><span>Countdown vor der Aufnahme</span><select id="countdown"><option value="0">Keiner</option><option value="3">3 Sekunden</option><option value="5">5 Sekunden</option><option value="10">10 Sekunden</option></select></label>
+          <label class="field"><span>Automatisch stoppen nach</span><div class="number-field"><input id="autoStopMinutes" type="number" min="0" max="360" step="any" value="0"><span>Minuten</span></div><small>0 = unbegrenzt. Pausen zählen nicht mit.</small></label>
+          <label class="check-row wide"><input id="microphoneReminder" type="checkbox"><span>Vor dem Start an ein ausgeschaltetes Mikrofon erinnern</span></label>
+        </div>
+      </section>
+      <section class="settings-section" aria-labelledby="menuHeading">
+        <div class="section-heading"><h2 id="menuHeading">Menü und Darstellung</h2><p>Deine bevorzugte Ansicht</p></div>
+        <div class="fields">
+          <label class="field"><span>Sprache der Oberfläche</span><select id="uiLanguage"><option value="auto">Sprache von Chrome</option><option value="de">Deutsch</option><option value="en">English</option><option value="fr">Français</option><option value="es">Español</option></select></label>
+          <label class="field"><span>Beim Öffnen anzeigen</span><select id="defaultTab"><option value="last">Zuletzt verwendeter Bereich</option><option value="record">Aufnahme</option><option value="screenshot">Screenshot</option></select></label>
+          <label class="field"><span>Darstellung</span><select id="theme"><option value="system">Wie Chrome</option><option value="light">Hell</option><option value="dark">Dunkel</option></select></label>
+          <label class="check-row wide"><input id="showContextMenu" type="checkbox"><span>Capture Desk im Rechtsklick-Menü anzeigen</span></label>
+        </div>
+      </section>
+      <footer class="save-bar"><div><p id="saveStatus" role="status" aria-live="polite"></p><small>Diese Einstellungen gelten für dieses Chrome-Profil.</small></div><div class="save-actions"><button id="resetButton" class="secondary" type="button">Standardwerte</button><button id="saveButton" class="primary" type="submit">Speichern</button></div></footer>
+    </form>
+  </main>
+</body>
+</html>

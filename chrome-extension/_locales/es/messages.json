@@ -1,0 +1,26 @@
+{
+  "description": {
+    "message": "Graba la pantalla o una zona, haz capturas y edita y guarda los archivos localmente."
+  },
+  "pause_resume": {
+    "message": "Pausar o reanudar"
+  },
+  "stop_recording": {
+    "message": "Detener y guardar"
+  },
+  "show_controls": {
+    "message": "Pausar y mostrar los controles"
+  },
+  "capture_visible": {
+    "message": "Capturar la parte visible"
+  },
+  "capture_fullpage": {
+    "message": "Capturar toda la página"
+  },
+  "capture_region": {
+    "message": "Capturar una zona de la página"
+  },
+  "start_recording": {
+    "message": "Iniciar con los últimos ajustes"
+  }
+}
