@@ -1,6 +1,6 @@
 # Chrome Web Store release
 
-Capture Desk is free to download. Google requires the publisher to register, enable two-step verification, accept the developer agreement and pay the one-time developer registration fee.
+Capture Desk is free to download. Google requires the publisher to register, enable two-step verification, accept the developer agreement and pay the [one-time US$5 developer registration fee](https://developer.chrome.com/docs/extensions/whats-new#blog-post-empower-your-team-with-expanded-roles-in-the-developer-dashboard).
 
 1. Create an item in the [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole).
 2. Build the Store package with `npm ci`, `npm run ocr:extension` and `npm run package:store`. Upload `artifacts/Capture-Desk-Chrome-Web-Store.zip`. The manifest is at the root of the ZIP.
@@ -16,7 +16,8 @@ Capture Desk is free to download. Google requires the publisher to register, ena
 | `storage` | Save recorder preferences and session state. |
 | `downloads`, `clipboardWrite` | Save files or copy edited screenshots on request. |
 | `contextMenus` | Provide user-invoked capture actions in the context menu. |
-| Optional provider origins | Send an explicitly selected AI request to the selected provider. |
+| Optional provider origins | Send an explicitly selected request to OpenRouter or the local Ollama instance. |
+| Optional `nativeMessaging` | Connect to the Capture Desk helper when the user chooses to use a ChatGPT or Claude subscription. The helper is installed separately and accepts connections only from the Chrome extension ID registered by the user. |
 
 ## Automatic updates
 

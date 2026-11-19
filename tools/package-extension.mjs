@@ -29,6 +29,7 @@ const required = [
   ...Object.values(manifest.icons || {}),
   ...Object.values(manifest.action?.default_icon || {}),
   "controls.html", "controls-view.html", "controls.js", "controls.css",
+  "devices.html", "devices.js", "devices.css",
   "floatingbar.html", "floatingbar.js", "floatingbar.css",
   "editor.html", "editor.js", "editor.css", "editor-ocr.js", "video-editor.js",
   "options.html", "options.js", "options.css", "preferences.js", "theme.js", "recording-overlay.js", "recording-folder.js",

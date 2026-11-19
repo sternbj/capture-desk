@@ -78,17 +78,48 @@ test("reopening the popup after a recording loads backups with the initialized s
   await expect(page.locator("#message")).toBeHidden();
 });
 
-test("window and screen area controls are visible before advanced settings", async ({ page }) => {
+test("the device check requests only the chosen device and stops any test tracks", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.__deviceChecks = [];
+    window.chrome = {
+      i18n: { getUILanguage: () => "de" },
+      storage: { local: { get: async () => ({ captureDeskLanguage: "de" }) }, onChanged: { addListener() {} } },
+    };
+    navigator.mediaDevices.getUserMedia = async settings => {
+      window.__deviceChecks.push(settings);
+      if (settings.video) throw new DOMException("Denied", "NotAllowedError");
+      return { getTracks: () => [{ stop: () => { window.__deviceChecks.push("stopped"); } }] };
+    };
+  });
+  await page.goto("/chrome-extension/devices.html");
+  await expect(page.locator("#microphoneStatus")).toHaveText("Noch nicht geprüft");
+  expect(await page.evaluate(() => window.__deviceChecks)).toEqual([]);
+  await page.locator("#testMicrophone").click();
+  await expect(page.locator("#microphoneStatus")).toHaveText("Gerät ist verfügbar");
+  await page.locator("#testCamera").click();
+  await expect(page.locator("#cameraStatus")).toHaveText("Zugriff wurde nicht erlaubt");
+  expect(await page.evaluate(() => window.__deviceChecks)).toEqual([{ audio: true }, "stopped", { video: true }]);
+});
+
+test("a recording region works before choosing a source and stays active across screen, window and tab", async ({ page }) => {
   await popup(page, { status: "idle", recordingId: null });
+  await expect(page.locator("#startButton")).toBeDisabled();
+  await page.locator("#regionCapture").check();
+  await expect(page.locator('input[name="source"][value="screen"]')).toBeChecked();
+  await expect(page.locator("#startButton")).toBeEnabled();
   for (const source of ["window", "screen", "tab"]) {
     await page.locator(`input[name="source"][value="${source}"]`).check();
     await expect(page.locator("#regionCaptureSetting")).toBeVisible();
-    await expect(page.locator("#regionCapture")).toBeEnabled();
+    await expect(page.locator("#regionCapture")).toBeChecked();
   }
-  await page.locator("#regionCapture").check();
   await expect(page.locator("#startButton")).toHaveText("Ausschnitt auswählen");
   await page.locator('input[name="source"][value="camera"]').check();
-  await expect(page.locator("#regionCaptureSetting")).toBeHidden();
+  await expect(page.locator("#regionCapture")).not.toBeChecked();
+  await page.locator("#regionCapture").check();
+  await expect(page.locator('input[name="source"][value="screen"]')).toBeChecked();
+  await page.locator("#startButton").click();
+  const started = await page.evaluate(() => window.__extensionMessages.find(message => message.type === "START_RECORDING"));
+  expect(started.options).toMatchObject({ source: "screen", regionCapture: true, camera: false });
 });
 
 test("the desktop preview sends source-pixel coordinates and removes its image on confirmation", async ({ page }) => {

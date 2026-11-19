@@ -184,6 +184,7 @@ function readSettings() {
   };
 }
 function fillSettings(settings, selectSource = sourceSelected) {
+  selectSource ||= settings.regionCapture && ["screen", "window", "tab"].includes(settings.source);
   for (const [key, value] of Object.entries(settings)) {
     const input = form.elements.namedItem(key);
     if (!input) continue;
@@ -203,6 +204,7 @@ function fillSettings(settings, selectSource = sourceSelected) {
   folderOption.hidden = !recordingFolderName && settings.saveDestination !== "folder";
   if (recordingFolderName) folderOption.title = recordingFolderName;
   sourceSelected = Boolean(form.elements.namedItem("source")?.value);
+  if (!sourceSelected || settings.source === "camera") $("regionCapture").checked = false;
   updateSummary();
 }
 function updateSummary() {
@@ -229,8 +231,7 @@ function updateSummary() {
   $("screenshotDelayLabel").textContent = `${settings.screenshotDelaySeconds} s`;
   if (settings.source === "camera") $("camera").checked = true;
   $("camera").disabled = busy || activeStatuses.includes(current.status) || settings.source === "camera";
-  $("regionCapture").disabled = busy || activeStatuses.includes(current.status) || !settings.source || settings.source === "camera";
-  $("regionCaptureSetting").hidden = settings.source === "camera";
+  $("regionCapture").disabled = busy || activeStatuses.includes(current.status);
   $("controlBarHint").textContent = settings.source === "screen"
     ? "Bei Bildschirmaufnahmen erscheint die Leiste erst nach dem Pausieren."
     : "Pause, Speichern und Einstellungen in einem schwebenden Fenster.";
@@ -535,6 +536,10 @@ $("modeTabs").addEventListener("keydown", event => {
 });
 $("settingsButton").onclick = () => drawer("settings");
 $("screenshotSettingsButton").onclick = () => drawer("settings");
+for (const button of document.querySelectorAll("[data-open-device-access]")) {
+  button.onclick = () => chrome.tabs.create({ url: chrome.runtime.getURL("devices.html") })
+    .catch(error => message(error.message, true));
+}
 $("optionsButton").onclick = () => action(() => api("OPEN_OPTIONS"));
 $("closeSettingsButton").onclick = () => { readonlySettingsRequested = false; drawer(null); };
 async function showLibrary() { drawer("library"); await loadLibrary().catch(error => message(error.message, true)); }
@@ -543,7 +548,14 @@ $("libraryFooterButton").onclick = showLibrary;
 $("openLastRecordingButton").onclick = () => action(() => api("OPEN_EDITOR", { id: current.lastRecordingResult.id }));
 $("closeLibraryButton").onclick = () => drawer(null);
 form.addEventListener("submit", event => event.preventDefault());
-form.addEventListener("change", async () => {
+form.addEventListener("change", async event => {
+  const source = form.elements.namedItem("source");
+  if (event.target === $("regionCapture") && $("regionCapture").checked && (!source.value || source.value === "camera")) {
+    source.value = "screen";
+  } else if (event.target.name === "source" && source.value === "camera") {
+    $("regionCapture").checked = false;
+  }
+  if (localSettings.source === "camera" && source.value !== "camera") $("camera").checked = false;
   sourceSelected = Boolean(form.elements.namedItem("source")?.value);
   updateSummary();
   if (!activeStatuses.includes(current.status)) {

@@ -11,6 +11,11 @@
 }
 .cd-assistant::backdrop { background: #14213390; }
 .cd-assistant header, .cd-assist-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.cd-assist-inline { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.cd-assistant a { color: LinkText; }
+.cd-assistant details { border: 1px solid color-mix(in srgb, CanvasText 20%, Canvas); border-radius: 6px; padding: 8px 10px; }
+.cd-assistant summary { cursor: pointer; font-weight: 550; }
+.cd-assistant details[open] > :not(summary) { margin-top: 7px; }
 .cd-assistant h2 { margin: 0; font-size: 20px; }
 .cd-assistant form, .cd-assistant section, .cd-assistant label { display: grid; gap: 7px; }
 .cd-assist-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }

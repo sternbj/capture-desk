@@ -8,9 +8,64 @@ html[data-surface=popup],html[data-surface=popup] body{width:320px;min-width:320
 html[data-surface=popup] body[data-mode=screenshot] .setup-body{flex:1 1 auto}#screenshotMessage{margin-top:9px}
 
 .app-footer button,.app-footer a{font-size:10px}
+.source-options {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.source-options .source-card, .region-option {
+  flex-direction: row;
+  justify-content: flex-start;
+  height: 37px;
+  gap: 10px;
+  padding: 0 10px;
+}
+.source-options .source-card img, .region-option img {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
 .region-option {
-  min-height: 34px;
-  margin-top: 7px;
+  height: auto;
+  min-height: 49px;
+  margin-top: 8px;
+  border-color: var(--accent);
+}
+:root[data-theme=dark] .source-card.region-option {
+  border-color: var(--accent);
+}
+.region-option .region-details {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+}
+.region-option small {
+  color: var(--muted);
+  font-size: 10px;
+}
+.region-option .region-mark {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+}
+.region-option:has(input:checked) .region-mark {
+  background: var(--accent);
+}
+.region-option:has(input:checked) .region-mark::after {
+  content: "";
+  width: 7px;
+  height: 4px;
+  border: solid white;
+  border-width: 0 0 2px 2px;
+  transform: translateY(-1px) rotate(-45deg);
+}
+.device-access-link {
+  width: 100%;
+  margin: 8px 0;
+}
+.device-popover .text-button {
+  margin-top: 6px;
 }
 #controlBarSetting .control-bar-toggle strong {
   font-size: 11px;

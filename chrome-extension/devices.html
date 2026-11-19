@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Capture Desk</title>
+  <link rel="icon" href="icons/recorder-32.png">
+  <link rel="stylesheet" href="controls.css">
+  <link rel="stylesheet" href="devices.css">
+  <script type="module" src="devices.js"></script>
+</head>
+<body>
+  <main class="device-setup">
+    <header>
+      <img src="icons/recorder-48.png" width="36" height="36" alt="">
+      <strong>Capture Desk</strong>
+    </header>
+    <h1>Mikrofon und Kamera prüfen</h1>
+    <p>Wähle das Gerät, das du verwenden möchtest. Wenn Chrome nachfragt, erlaube den Zugriff. Der Test erstellt keine Aufnahme.</p>
+    <div class="device-checks">
+      <section aria-labelledby="microphoneHeading">
+        <img src="icons/mic.svg" width="24" height="24" alt="">
+        <div><h2 id="microphoneHeading">Mikrofon</h2><p id="microphoneStatus" role="status">Noch nicht geprüft</p></div>
+        <button class="button secondary" id="testMicrophone" type="button">Mikrofon testen</button>
+      </section>
+      <section aria-labelledby="cameraHeading">
+        <img src="icons/video.svg" width="24" height="24" alt="">
+        <div><h2 id="cameraHeading">Kamera</h2><p id="cameraStatus" role="status">Noch nicht geprüft</p></div>
+        <button class="button secondary" id="testCamera" type="button">Kamera testen</button>
+      </section>
+    </div>
+    <p>Falls Chrome den Zugriff blockiert, prüfe die Berechtigungen in Chrome und in den Datenschutzeinstellungen deines Betriebssystems. Verwende bei Bedarf ein eingebautes oder angeschlossenes Mikrofon.</p>
+  </main>
+</body>
+</html>

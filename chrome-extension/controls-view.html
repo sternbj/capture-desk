@@ -11,7 +11,7 @@
       <form id="settingsForm" class="settings-form">
         <div id="setupBody" class="setup-body">
           <section id="recordPanel" role="tabpanel" aria-labelledby="recordTab">
-            <div class="source-heading"><h1>Aufnahmequelle</h1><label class="camera-only-choice"><input type="radio" name="source" value="camera"><img src="icons/video.svg" alt="">Nur Kamera</label></div>
+            <div class="source-heading"><h1>Aufnahmequelle</h1></div>
             <fieldset class="source-options" aria-label="Aufnahmequelle">
               <label class="source-card">
                 <input type="radio" name="source" value="screen">
@@ -20,9 +20,15 @@
               </label>
               <label class="source-card"><input type="radio" name="source" value="window"><img src="icons/app-window.svg" alt=""><strong>Fenster</strong><span>Eine Anwendung</span></label>
               <label class="source-card"><input type="radio" name="source" value="tab"><img src="icons/panels-top-left.svg" alt=""><strong>Chrome-Tab</strong><span>Eine Webseite</span></label>
+              <label class="source-card"><input type="radio" name="source" value="camera"><img src="icons/video.svg" alt=""><strong>Nur Kamera</strong></label>
             </fieldset>
+            <label id="regionCaptureSetting" class="source-card region-option">
+              <input id="regionCapture" name="regionCapture" type="checkbox" aria-labelledby="regionCaptureTitle" aria-describedby="regionCaptureHint">
+              <img src="icons/scan.svg" alt="">
+              <span class="region-details"><strong id="regionCaptureTitle">Ausschnitt aufnehmen</strong><small id="regionCaptureHint">Nur einen Teil der Quelle aufnehmen</small></span>
+              <span class="region-mark" aria-hidden="true"></span>
+            </label>
             <p id="sourceHint" class="source-hint">Wähle zuerst eine Aufnahmequelle.</p>
-            <label id="regionCaptureSetting" class="toggle-row region-option"><img src="icons/scan.svg" alt=""><span><strong>Ausschnitt aufnehmen</strong></span><input id="regionCapture" name="regionCapture" type="checkbox" role="switch"><span class="switch-track" aria-hidden="true"></span></label>
 
           </section>
           <section id="screenshotPanel" role="tabpanel" aria-labelledby="screenshotTab" hidden>
@@ -46,13 +52,14 @@
         <section id="settingsPanel" class="advanced-panel" aria-label="Weitere Einstellungen" hidden>
           <div class="section-title"><button id="closeSettingsButton" class="back-button" type="button" aria-label="Zurück zur Aufnahme"><img src="icons/arrow-left.svg" alt=""></button><h1>Weitere Einstellungen</h1></div>
           <div class="advanced-body">
-            <label class="field inline-field"><span>Darstellung</span><select id="uiTheme" aria-label="Darstellung"><option value="system">Wie Chrome</option><option value="light">Hell</option><option value="dark">Dunkel</option></select></label>
             <label class="toggle-row"><span><strong>Bei ausgeschaltetem Mikrofon erinnern</strong></span><input id="microphoneReminder" name="microphoneReminder" type="checkbox" role="switch" checked><span class="switch-track" aria-hidden="true"></span></label>
-            <label class="toggle-row"><img src="icons/volume-2.svg" alt=""><span><strong>Ton der Quelle</strong><small id="audioHint">Wenn Chrome ihn anbietet</small></span><input id="systemAudio" name="systemAudio" type="checkbox" role="switch" checked><span class="switch-track" aria-hidden="true"></span></label>
-            <label class="field"><span>Name der Aufnahme</span><input id="recordingName" name="name" type="text" maxlength="90" placeholder="Meine Aufnahme" autocomplete="off"></label>
-            <div class="settings-grid"><label class="field"><span>Countdown</span><select id="countdown" name="countdown"><option value="0">Keiner</option><option value="3" selected>3 Sekunden</option><option value="5">5 Sekunden</option><option value="10">10 Sekunden</option></select></label></div>
+            <label class="field inline-field"><span>Countdown</span><select id="countdown" name="countdown"><option value="0">Keiner</option><option value="3" selected>3 Sekunden</option><option value="5">5 Sekunden</option><option value="10">10 Sekunden</option></select></label>
             <label class="toggle-row"><span><strong>Automatisch beenden</strong></span><input id="autoStopEnabled" name="autoStopEnabled" type="checkbox" role="switch"><span class="switch-track" aria-hidden="true"></span></label>
             <label id="autoStopField" class="field inline-field" hidden><span>Beenden nach</span><input id="autoStopMinutes" name="autoStopMinutes" type="number" min="0.1" max="360" step="0.1" value="5" aria-label="Automatisch beenden nach Minuten"><span>Minuten</span></label>
+            <button class="screenshot-row device-access-link" data-open-device-access type="button"><img src="icons/shield-check.svg" alt=""><span>Mikrofon und Kamera prüfen</span><img src="icons/chevron-right.svg" alt=""></button>
+            <label class="toggle-row"><img src="icons/volume-2.svg" alt=""><span><strong>Ton der Quelle</strong><small id="audioHint">Wenn Chrome ihn anbietet</small></span><input id="systemAudio" name="systemAudio" type="checkbox" role="switch" checked><span class="switch-track" aria-hidden="true"></span></label>
+            <label class="field inline-field"><span>Darstellung</span><select id="uiTheme" aria-label="Darstellung"><option value="system">Wie Chrome</option><option value="light">Hell</option><option value="dark">Dunkel</option></select></label>
+            <label class="field"><span>Name der Aufnahme</span><input id="recordingName" name="name" type="text" maxlength="90" placeholder="Meine Aufnahme" autocomplete="off"></label>
             <label class="field inline-field"><span>Screenshot-Verzögerung</span><select id="screenshotDelay" name="screenshotDelaySeconds"><option value="3" selected>3 Sekunden</option><option value="5">5 Sekunden</option><option value="10">10 Sekunden</option></select></label>
             <div class="settings-grid"><label class="field"><span>Bildrate</span><select id="frameRate" name="frameRate"><option value="24">24 fps</option><option value="30" selected>30 fps</option><option value="60">60 fps</option></select></label><label class="field"><span>Videoqualität</span><select id="bitrate" name="bitrate"><option value="2500000">Kompakt · 2,5 Mbps</option><option value="4000000" selected>Standard · 4 Mbps</option><option value="8000000">Hoch · 8 Mbps</option></select></label></div>
             <div id="cameraOptions" hidden><label class="field"><span>Kameraposition</span><select id="cameraPosition" name="cameraPosition"><option value="bottom-right">Unten rechts</option><option value="bottom-left">Unten links</option><option value="top-right">Oben rechts</option><option value="top-left">Oben links</option></select></label></div>
@@ -67,7 +74,7 @@
                 <img class="device-icon-on" src="icons/video.svg" alt=""><img class="device-icon-off" src="icons/video-off.svg" alt="">
               </label>
               <button id="cameraDeviceButton" class="device-dropdown-button" type="button" aria-label="Kamera auswählen" aria-expanded="false" aria-controls="cameraDeviceMenu"><span aria-hidden="true"></span></button>
-              <div id="cameraDeviceMenu" class="device-popover" role="group" aria-label="Kameraeinstellungen" hidden><label class="field"><span>Kamera auswählen</span><select id="cameraDevice" name="cameraDeviceId"><option value="">Standardkamera</option></select></label></div>
+              <div id="cameraDeviceMenu" class="device-popover" role="group" aria-label="Kameraeinstellungen" hidden><label class="field"><span>Kamera auswählen</span><select id="cameraDevice" name="cameraDeviceId"><option value="">Standardkamera</option></select></label><button class="text-button" data-open-device-access type="button">Zugriff prüfen</button></div>
             </div>
             <div id="microphoneControl" class="device-control">
               <label class="device-toggle" title="Mikrofon ein- oder ausschalten">
@@ -75,7 +82,7 @@
                 <img class="device-icon-on" src="icons/mic.svg" alt=""><img class="device-icon-off" src="icons/mic-off.svg" alt="">
               </label>
               <button id="microphoneDeviceButton" class="device-dropdown-button" type="button" aria-label="Mikrofon auswählen" aria-expanded="false" aria-controls="microphoneDeviceMenu"><span aria-hidden="true"></span></button>
-              <div id="microphoneDeviceMenu" class="device-popover" role="group" aria-label="Mikrofoneinstellungen" hidden><label class="field"><span>Mikrofon auswählen</span><select id="microphoneDevice" name="microphoneDeviceId"><option value="">Standardmikrofon</option></select></label></div>
+              <div id="microphoneDeviceMenu" class="device-popover" role="group" aria-label="Mikrofoneinstellungen" hidden><label class="field"><span>Mikrofon auswählen</span><select id="microphoneDevice" name="microphoneDeviceId"><option value="">Standardmikrofon</option></select></label><button class="text-button" data-open-device-access type="button">Zugriff prüfen</button></div>
             </div>
             <div id="controlBarSetting" class="control-bar-setting"><label class="toggle-row control-bar-toggle"><img src="icons/panels-top-left.svg" alt=""><span><strong>Schwebende Leiste</strong></span><input id="controlBar" name="controlBar" type="checkbox" role="switch" checked aria-describedby="controlBarHint"><span class="switch-track" aria-hidden="true"></span></label><span id="controlBarHint" hidden></span></div>
           </div>

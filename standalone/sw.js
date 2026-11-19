@@ -1,6 +1,6 @@
 const scope = self.registration.scope;
 const cachePrefix = "capture-desk-shell:" + scope + ":";
-const cacheName = cachePrefix + "1";
+const cacheName = cachePrefix + "2";
 const core = ["./", "./index.html", "./style.css", "./locales.js", "./recording-store.js", "./recorder.js", "./sw.js"];
 const optional = ["../chrome-extension/ai-providers.js", "../chrome-extension/assist-panel.js", "../chrome-extension/assist-panel.css"];
 const assets = new Set([...core, ...optional].map(path => new URL(path, scope).href));
